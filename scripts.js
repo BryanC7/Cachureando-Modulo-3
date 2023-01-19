@@ -1,16 +1,48 @@
-productos = [
-    {imagen: 'https://picsum.photos/id/21/300/200', nombre: 'producto 1', codigo: '1', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '100', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/23/300/200', nombre: 'producto 2', codigo: '2', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '120', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/24/300/200', nombre: 'producto 3', codigo: '3', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '130', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/30/300/200', nombre: 'producto 4', codigo: '4', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '100', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/36/300/200', nombre: 'producto 5', codigo: '5', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '120', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/96/300/200', nombre: 'producto 6', codigo: '6', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '130', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/104/300/200', nombre: 'producto 7', codigo: '7', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '100', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/111/300/200', nombre: 'producto 8', codigo: '8', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '130', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/146/300/200', nombre: 'producto 9', codigo: '9', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '100', cantidad: 1},
-    {imagen: 'https://picsum.photos/id/250/300/200', nombre: 'producto 10', codigo: '10', descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: '100', cantidad: 1}
-];
+// Array con los productos
+let productos = [
+    {imagen: 'https://picsum.photos/id/21/300/200', nombre: 'Producto 1', codigo: 1, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 10, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/23/300/200', nombre: 'Producto 2', codigo: 2, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 20, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/24/300/200', nombre: 'Producto 3', codigo: 3, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 30, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/30/300/200', nombre: 'Producto 4', codigo: 4, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 40, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/36/300/200', nombre: 'Producto 5', codigo: 5, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 50, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/96/300/200', nombre: 'Producto 6', codigo: 6, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 60, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/104/300/200', nombre: 'Producto 7', codigo: 7, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 70, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/111/300/200', nombre: 'Producto 8', codigo: 8, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 80, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/146/300/200', nombre: 'Producto 9', codigo: 9, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 90, cantidad: 1},
+    {imagen: 'https://picsum.photos/id/250/300/200', nombre: 'Producto 10', codigo: 10, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 100, cantidad: 1}
+]
 
-console.log(productos);
+// Imprime el array en la consola
+console.log(productos)
 
-productos.forEach(producto => console.log(producto.codigo));
+// Definición de variables y eventos
+const cards = document.querySelector('.cards') // Contenedor padre
+window.addEventListener('DOMContentLoaded', mostrarProductos) // Cuando cargue por primera vez el sitio web, mande a llamar la función mostrarProductos
+
+// Función que muestra los productos en la página
+function mostrarProductos() {
+
+    productos.forEach(producto => { // Recorre el arreglo y por cada elemento ejecuta lo que está entre llaves {}
+        console.log(producto) // Muestra en consola elemento por elemento
+        const card = document.createElement('div') // Contenedor hijo
+        card.classList.add('card', 'p-2')
+        card.innerHTML = 
+        `
+        <img class="w-100 mb-2" src="${producto.imagen}">
+        <p>${producto.nombre}</p>
+        <p>Código: ${producto.codigo}</p>
+        <p>Descripción: ${producto.descripcion}.</p>
+        <p>Precio: $${producto.precio}</p>
+        <button onclick="obtenerInfo(${producto.codigo})">Agregar al carrito</button>
+        `
+        // Contenedor padre "adopta" al contenedor hijo indicado entre paréntesis
+        cards.appendChild(card)
+    })
+}
+
+// Función que al momento de hacer click en un botón rescate la información del producto específico
+function obtenerInfo(id) {
+    console.log(id) // Esta función al estar vinculada con el botón, este console.log posee el código del producto como identificador
+    const producto = productos.filter(producto => id === producto.codigo) // Filter recorre un arreglo y devuelve el primer resultado según la condición indicada despúes de la "arrow function" (=>)
+    console.log(producto) // Despúes de hacer click en el botón este console.log muestra el elemento ya filtrado del arreglo
+}
