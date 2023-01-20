@@ -52,19 +52,22 @@ function agregarCarrito(id){
     const contenidoTabla = document.createElement('tr')
     contenidoTabla.innerHTML =
     `
-    <td>sdfsdf</td>
-    <td>sdfsdf</td>
-    <td>sdfsdf</td>
-    <td>sdfsdf</td>
+    <td><img width=80px src=${productos[id].imagen}></td>
+    <td>${productos[id].nombre}</td>
+    <td>${productos[id].cantidad}</td>
+    <td>${productos[id].precio}</td>
     `
     tabla.appendChild(contenidoTabla)
 }
 
 function obtenerInfo(id) {
     console.log(id) 
-    const producto = productos.filter(producto => id === producto.codigo) // Filter recorre un arreglo y devuelve el primer resultado según la condición indicada despúes de la "arrow function" (=>)
-    console.log(producto) // Despúes de hacer click en el botón este console.log muestra el elemento ya filtrado del arreglo
+    const producto = productos.filter(producto => {
+        if(id === producto.codigo){
+            agregarCarrito(id)
+        }}) // Filter recorre un arreglo y devuelve el primer resultado según la condición indicada despúes de la "arrow function" (=>)
+    console.log(producto[id]) // Despúes de hacer click en el botón este console.log muestra el elemento ya filtrado del arreglo
 
-    agregarCarrito(id);
+  
 }
 
