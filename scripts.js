@@ -13,10 +13,11 @@ let productos = [
 ]
 
 // Imprime el array en la consola
-console.log(productos)
+//console.log(productos)
 
 // Definición de variables y eventos
 const cards = document.querySelector('.cards') // Contenedor padre
+const tabla = document.querySelector('#tabla') // Contenedor padre
 window.addEventListener('DOMContentLoaded', mostrarProductos) // Cuando cargue por primera vez el sitio web, mande a llamar la función mostrarProductos
 
 
@@ -24,9 +25,8 @@ window.addEventListener('DOMContentLoaded', mostrarProductos) // Cuando cargue p
  * Función que muestra los productos en la página
  */
 function mostrarProductos() {
-
     productos.forEach(producto => { // Recorre el arreglo y por cada elemento ejecuta lo que está entre llaves {}
-        console.log(producto) // Muestra en consola elemento por elemento
+        //console.log(producto) // Muestra en consola elemento por elemento
         const card = document.createElement('div') // Contenedor hijo
         card.classList.add('card', 'p-2')
         card.innerHTML = 
@@ -43,14 +43,28 @@ function mostrarProductos() {
         cards.appendChild(card)
     })
 }
-
-
 /**
  * Función que al momento de hacer click en un botón rescate la información del producto específico
  * @param {Number} id Código rescatado del botón de la card
  */
+function agregarCarrito(id){
+
+    const contenidoTabla = document.createElement('tr')
+    contenidoTabla.innerHTML =
+    `
+    <td>sdfsdf</td>
+    <td>sdfsdf</td>
+    <td>sdfsdf</td>
+    <td>sdfsdf</td>
+    `
+    tabla.appendChild(contenidoTabla)
+}
+
 function obtenerInfo(id) {
     console.log(id) 
     const producto = productos.filter(producto => id === producto.codigo) // Filter recorre un arreglo y devuelve el primer resultado según la condición indicada despúes de la "arrow function" (=>)
     console.log(producto) // Despúes de hacer click en el botón este console.log muestra el elemento ya filtrado del arreglo
+
+    agregarCarrito(id);
 }
+
