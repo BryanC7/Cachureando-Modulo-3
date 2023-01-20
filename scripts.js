@@ -81,7 +81,7 @@ function agregarCarrito(id){
      function actualizarCantidad(carritoProducto){
          console.log(carrito)
          console.log(carritoProducto)
-         const carritoProducto = carrito.filter(carrito => {
+            carritoProducto = carrito.filter(carrito => {
              if (carrito.id === carritoProducto.id){
                  carritoProducto.cantidad++
                  return carrito
