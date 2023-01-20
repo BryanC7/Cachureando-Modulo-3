@@ -37,34 +37,68 @@ function mostrarProductos() {
         <p>Código: ${producto.codigo}</p>
         <p>Descripción: ${producto.descripcion}.</p>
         <p>Precio: $${producto.precio}</p>
-        <button onclick="obtenerInfo(${producto.codigo})">Agregar al carrito</button>
+        <button onclick="agregarCarrito(${producto.codigo})">Agregar al carrito</button>
         `
         // Contenedor padre "adopta" al contenedor hijo indicado entre paréntesis
         cards.appendChild(card)
     })
 }
+
+
+
+const contenidocard = document.querySelector('#contenido-card') 
+const carrito = [];
 /**
  * Función que al momento de hacer click en un botón rescate la información del producto específico
  * @param {Number} id Código rescatado del botón de la card
  */
 function agregarCarrito(id){
-
+    const producto = productos.filter(producto => id === producto.codigo)[0]
     const contenidoTabla = document.createElement('tr')
     contenidoTabla.innerHTML =
     `
-    <td>sdfsdf</td>
-    <td>sdfsdf</td>
-    <td>sdfsdf</td>
-    <td>sdfsdf</td>
+    <td><img src=${producto.imagen} width="100px"></td>
+    <td class="pcarrito">${producto.nombre}</td>
+    <td class="pcarrito">${producto.cantidad}</td>
+    <td class="pcarrito">$${producto.precio}</td>
     `
     tabla.appendChild(contenidoTabla)
+
+    productoCarrito= {
+        imagen: producto.imagen,
+        nombre: producto.nombre,
+        cantidad: producto.cantidad,
+        predio: producto.precio,
+        id : producto.codigo
+    }
+    carrito.push(productoCarrito)
+    console.log(carrito)
+    console.log(productoCarrito)
+     actualizarCantidad(productoCarrito)
+    
 }
 
-function obtenerInfo(id) {
-    console.log(id) 
-    const producto = productos.filter(producto => id === producto.codigo) // Filter recorre un arreglo y devuelve el primer resultado según la condición indicada despúes de la "arrow function" (=>)
-    console.log(producto) // Despúes de hacer click en el botón este console.log muestra el elemento ya filtrado del arreglo
+     function actualizarCantidad(carritoProducto){
+         console.log(carrito)
+         console.log(carritoProducto)
+         const carritoProducto = carrito.filter(carrito => {
+             if (carrito.id === carritoProducto.id){
+                 carritoProducto.cantidad++
+                 return carrito
+             }  else {
+                 return carritoProducto
+             }
+         } )
+     }
 
-    agregarCarrito(id);
-}
 
+
+// function obtenerInfo(id) {
+//     console.log(id) 
+//     const producto = productos.filter(producto => id === producto.codigo) // Filter recorre un arreglo y devuelve el primer resultado según la condición indicada despúes de la "arrow function" (=>)
+//     console.log(producto);
+//     console.log(producto[0].precio) // Despúes de hacer click en el botón este console.log muestra el elemento ya filtrado del arreglo
+
+//     agregarCarrito(id);
+    
+// }
