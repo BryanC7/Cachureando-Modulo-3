@@ -36,16 +36,19 @@
         </div>
         <div class="offcanvas-body">
             <table class="w-100 text-center" id="tabla">
-                <tr>
-                    <th>Imágen</th>
-                    <th>Nombre Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                </tr>
-                <tr id="contenido-tabla">
-                    
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Imágen</th>
+                        <th>Nombre Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody id="contenido-tabla"></tbody>
             </table>
+            <div>
+                <button id="vaciar-carrito" onclick="eliminarCarrito()" class="btn btn-success w-100">Vaciar Carrito</button>
+            </div>
         </div>
     </div>
 </body>

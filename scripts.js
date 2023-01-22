@@ -1,5 +1,4 @@
-// Array con los productos
-let productos = [
+let catalogo = [
     {imagen: 'https://picsum.photos/id/21/300/200', nombre: 'Producto 1', codigo: 1, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 10, cantidad: 1},
     {imagen: 'https://picsum.photos/id/23/300/200', nombre: 'Producto 2', codigo: 2, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 20, cantidad: 1},
     {imagen: 'https://picsum.photos/id/24/300/200', nombre: 'Producto 3', codigo: 3, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 30, cantidad: 1},
@@ -12,93 +11,88 @@ let productos = [
     {imagen: 'https://picsum.photos/id/250/300/200', nombre: 'Producto 10', codigo: 10, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 100, cantidad: 1}
 ]
 
-// Imprime el array en la consola
-//console.log(productos)
+const cards = document.querySelector('.cards') 
+const tabla = document.querySelector('#tabla') 
+const contenidoTabla = document.querySelector('#contenido-tabla') 
+const vaciarCarrito = document.querySelector('#vaciar-carrito')
+let carrito = []
+window.addEventListener('DOMContentLoaded', mostrarProductos) 
 
-// Definición de variables y eventos
-const cards = document.querySelector('.cards') // Contenedor padre
-const tabla = document.querySelector('#tabla') // Contenedor padre
-window.addEventListener('DOMContentLoaded', mostrarProductos) // Cuando cargue por primera vez el sitio web, mande a llamar la función mostrarProductos
-
-
-/**
- * Función que muestra los productos en la página
- */
 function mostrarProductos() {
-    productos.forEach(producto => { // Recorre el arreglo y por cada elemento ejecuta lo que está entre llaves {}
-        //console.log(producto) // Muestra en consola elemento por elemento
-        const card = document.createElement('div') // Contenedor hijo
+    catalogo.forEach(producto => { 
+        const card = document.createElement('div')
         card.classList.add('card', 'p-2')
         card.innerHTML = 
-        // `` comillas invertidas conocidas como template strings, utilizado para inyectar variables en el HTML. Se utiliza la sintaxis de ${} y dentro de la llaves la variable
         `
         <img class="w-100 mb-2" src="${producto.imagen}">
         <p>${producto.nombre}</p>
         <p>Código: ${producto.codigo}</p>
         <p>Descripción: ${producto.descripcion}.</p>
         <p>Precio: $${producto.precio}</p>
-        <button onclick="agregarCarrito(${producto.codigo})">Agregar al carrito</button>
+        <button onclick="crearObj(${producto.codigo})">Agregar al carrito</button>
         `
-        // Contenedor padre "adopta" al contenedor hijo indicado entre paréntesis
         cards.appendChild(card)
     })
 }
 
-
-
-const contenidocard = document.querySelector('#contenido-card') 
-const carrito = [];
-/**
- * Función que al momento de hacer click en un botón rescate la información del producto específico
- * @param {Number} id Código rescatado del botón de la card
- */
-function agregarCarrito(id){
-    const producto = productos.filter(producto => id === producto.codigo)[0]
-    const contenidoTabla = document.createElement('tr')
-    contenidoTabla.innerHTML =
-    `
-    <td><img src=${producto.imagen} width="100px"></td>
-    <td class="pcarrito">${producto.nombre}</td>
-    <td class="pcarrito">${producto.cantidad}</td>
-    <td class="pcarrito">$${producto.precio}</td>
-    `
-    tabla.appendChild(contenidoTabla)
-
-    productoCarrito= {
+function crearObj(id){
+    const producto = catalogo.filter(producto => id === producto.codigo)[0] 
+    productoCarrito = {
         imagen: producto.imagen,
         nombre: producto.nombre,
         cantidad: producto.cantidad,
-        predio: producto.precio,
-        id : producto.codigo
+        precio: producto.precio,
+        id: producto.codigo
     }
-    carrito.push(productoCarrito)
-    console.log(carrito)
-    console.log(productoCarrito)
-     actualizarCantidad(productoCarrito)
-    
+    if(carrito.some(producto => producto.id === productoCarrito.id)) {
+        const productos = carrito.map(producto => {
+            if(producto.id === productoCarrito.id) {
+                producto.cantidad++
+                producto.precio = calcularPrecio(producto.cantidad, producto.id)
+                return producto
+            } else {
+                return producto
+            }
+        })
+        carrito = [...productos]
+    } else {
+        carrito = [...carrito, productoCarrito]
+    }
+    mostrarCarrito()
 }
 
-     function actualizarCantidad(carritoProducto){
-         console.log(carrito)
-         console.log(carritoProducto)
-            carritoProducto = carrito.filter(carrito => {
-             if (carrito.id === carritoProducto.id){
-                 carritoProducto.cantidad++
-                 return carrito
-             }  else {
-                 return carritoProducto
-             }
-         } )
-     }
+function mostrarCarrito(){
+    eliminarCarrito()
+    carrito.forEach(producto => {
+        const productoTabla = document.createElement('tr')
+        productoTabla.innerHTML =
+        `
+        <td>
+            <img src=${producto.imagen} width="100px">
+        </td>
+        <td>${producto.nombre}</td>
+        <td>${producto.cantidad}</td>
+        <td>$${producto.precio}</td>
+        <td>
+            <button onclick="eliminarProducto(${productoCarrito.id})">X</button>
+        </td>
+        `
+        contenidoTabla.appendChild(productoTabla)
+    })
+}
 
+function eliminarCarrito() {
+    while(contenidoTabla.firstChild) {
+        contenidoTabla.removeChild(contenidoTabla.firstChild)
+    }
+}
 
+function calcularPrecio(cantidad, id) {
+    const producto = catalogo.filter(producto => id === producto.codigo)[0]
+    return cantidad * producto.precio
+}
 
-// function obtenerInfo(id) {
-//     console.log(id) 
-//     const producto = productos.filter(producto => id === producto.codigo) // Filter recorre un arreglo y devuelve el primer resultado según la condición indicada despúes de la "arrow function" (=>)
-//     console.log(producto);
-//     console.log(producto[0].precio) // Despúes de hacer click en el botón este console.log muestra el elemento ya filtrado del arreglo
+// function eliminarProducto(id) {
+//     const carritoCompra = carrito.filter(producto => id !== producto.codigo)[0]
 
-//     agregarCarrito(id);
-    
 // }
