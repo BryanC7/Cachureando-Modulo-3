@@ -17,8 +17,13 @@ const cards = document.querySelector('.cards')
 const tabla = document.querySelector('#tabla') 
 const contenidoTabla = document.querySelector('#contenido-tabla') 
 const vaciarCarrito = document.querySelector('#vaciar-carrito')
+const totalNeto = document.querySelector('#totalNeto')
+const totalIva = document.querySelector('#totalIva')
+const totalCompra = document.querySelector('#totalCompra')
+const botonAgregar = document.querySelector('.boton') 
 let carrito = []
-window.addEventListener('DOMContentLoaded', mostrarProductos) 
+
+window.addEventListener('DOMContentLoaded', mostrarProductos)
 
 /**
  * Muestra en el DOM todos los productos del arreglo
@@ -34,7 +39,7 @@ function mostrarProductos() {
         <p>Código: ${producto.codigo}</p>
         <p>Descripción: ${producto.descripcion}.</p>
         <p>Precio: $${producto.precio}</p>
-        <button onclick="crearObj(${producto.codigo})">Agregar al carrito</button>
+        <button onclick="crearObj(${producto.codigo})" class="boton">Agregar al carrito</button>
         `
         cards.appendChild(card)
     })
@@ -67,6 +72,7 @@ function crearObj(id){
     } else {
         carrito = [...carrito, productoCarrito]
     }
+    calcularNeto()
     mostrarCarrito()
 }
 /**
@@ -127,4 +133,14 @@ function calcularPrecio(cantidad, id) {
 function eliminarProducto(id) {
     carrito = carrito.filter(producto => id !== producto.id)
     mostrarCarrito()
+    calcularNeto()
+}
+
+/** 
+ * Calcula el precio total neto del arreglo
+*/
+function calcularNeto() {
+    const neto = carrito.map(producto => producto.precio)
+    const carritoNeto = neto.reduce((total, actual) => total + actual)
+    totalNeto.textContent = '$' + carritoNeto
 }
