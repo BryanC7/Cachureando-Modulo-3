@@ -7,6 +7,11 @@ p {
 .offcanvas {
     --bs-offcanvas-width: 500px;
 }
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -33,6 +38,12 @@ p {
     text-decoration: none;
     padding: 20px;
     cursor: pointer;
+}
+.carrito{
+    position: fixed;
+    right: 0;
+    bottom: 16%;
+    z-index: 100;
 }
 .text {
     color: white;
@@ -67,4 +78,8 @@ p {
     align-items: center;
     margin-top: 40px;
     height: 100px;
+}
+.contenido-carro{
+    width: 200px;
+    background-color: rgba(222, 243, 34, 0.815);
 }
