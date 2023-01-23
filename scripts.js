@@ -85,7 +85,7 @@ function mostrarCarrito(){
         <td>${producto.cantidad}</td>
         <td>$${producto.precio}</td>
         <td>
-            <button onclick="eliminarProducto(${productoCarrito.id})">X</button>
+            <button onclick="eliminarProducto(${producto.id})">X</button>
         </td>
         `
         contenidoTabla.appendChild(productoTabla)
@@ -99,6 +99,14 @@ function eliminarCarrito() {
     while(contenidoTabla.firstChild) {
         contenidoTabla.removeChild(contenidoTabla.firstChild)
     }
+}
+
+/**
+ * Elimina todo el contenido del carrito al momento de presionar el botón de vaciar
+ */
+function borrarCarrito() {
+    carrito = []
+    mostrarCarrito()
 }
 
 /**
@@ -116,7 +124,7 @@ function calcularPrecio(cantidad, id) {
  * Elimina un producto del carrito
  * @param {Number} id: Código del producto
  */
-// function eliminarProducto(id) {
-//     const carritoCompra = carrito.filter(producto => id !== producto.codigo)[0]
-
-// }
+function eliminarProducto(id) {
+    carrito = carrito.filter(producto => id !== producto.id)
+    mostrarCarrito()
+}
