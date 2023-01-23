@@ -20,7 +20,6 @@ const vaciarCarrito = document.querySelector('#vaciar-carrito')
 const totalNeto = document.querySelector('#totalNeto')
 const totalIva = document.querySelector('#totalIva')
 const totalCompra = document.querySelector('#totalCompra')
-const botonAgregar = document.querySelector('.boton') 
 let carrito = []
 
 window.addEventListener('DOMContentLoaded', mostrarProductos)
@@ -46,7 +45,7 @@ function mostrarProductos() {
 }
 
 /**
- * Filtra del arreglo original un producto según su id y crea un objeto de éste, evalúa si ya existe en el arreglo del carrito para así aumentar cantidad y precio. Finalmente retorna al arreglo carrito y se llama a la función encargada de imprimirlo en el DOM
+ * Filtra del arreglo original un producto según su id y crea un objeto de éste, evalúa si ya existe en el arreglo del carrito para así aumentar cantidad y precio. Finalmente retorna al arreglo carrito y se llama a la función encargada de imprimirlo junto a sus valores en el DOM
  * @param {Number} id: Código del producto que se extrae del botón "Agregar al carrito"  
  */
 function crearObj(id){
@@ -72,14 +71,14 @@ function crearObj(id){
     } else {
         carrito = [...carrito, productoCarrito]
     }
-    calcularNeto()
+    calcularTotales()
     mostrarCarrito()
 }
 /**
  * Imprime el carrito de compra en el DOM
  */
 function mostrarCarrito(){
-    eliminarCarrito()
+    eliminarInfoPrevia()
     carrito.forEach(producto => {
         const productoTabla = document.createElement('tr')
         productoTabla.innerHTML =
@@ -101,17 +100,21 @@ function mostrarCarrito(){
 /**
  * Mientras exista un elemento en el contenedor padre, se remueve y se imprime el siguiente
  */
-function eliminarCarrito() {
+function eliminarInfoPrevia() {
     while(contenidoTabla.firstChild) {
         contenidoTabla.removeChild(contenidoTabla.firstChild)
     }
 }
 
 /**
- * Elimina todo el contenido del carrito al momento de presionar el botón de vaciar
+ * Elimina todo el contenido del carrito + los valores totales al momento de presionar el botón de vaciar
  */
 function borrarCarrito() {
     carrito = []
+    totalNeto.textContent = '$0'
+    totalIva.textContent = '$0'
+    totalCompra.textContent = '$0'
+    
     mostrarCarrito()
 }
 
@@ -133,14 +136,28 @@ function calcularPrecio(cantidad, id) {
 function eliminarProducto(id) {
     carrito = carrito.filter(producto => id !== producto.id)
     mostrarCarrito()
-    calcularNeto()
+    if(carrito.length !== 0) {
+        calcularTotales()
+    } else {
+        borrarCarrito()
+    }
 }
 
 /** 
- * Calcula el precio total neto del arreglo
+ * Calcula los precios totales según contenido del carrito (total neto, el IVA incluido y el total + IVA)
 */
-function calcularNeto() {
-    const neto = carrito.map(producto => producto.precio)
-    const carritoNeto = neto.reduce((total, actual) => total + actual)
-    totalNeto.textContent = '$' + carritoNeto
+function calcularTotales() {
+    const preciosCarrito = carrito.map(producto => producto.precio)
+    let totalCarrito = preciosCarrito.reduce((total, actual) => total + actual)
+    console.log(totalCarrito)
+
+    totalNeto.textContent = `$ ${totalCarrito}`
+    totalIva.textContent = `$ ${totalCarrito} + (${totalCarrito} * 0.19)`
+    totalCompra.textContent = '$' + (totalCarrito + (totalCarrito * 0.19))
+    
+    const valorTotal = parseFloat(totalCompra.textContent.slice(1, 10))
+    console.log(valorTotal)
+    if(valorTotal < 500) {
+        return totalCarrito + (totalCarrito * 0.05)
+    } 
 }
