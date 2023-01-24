@@ -12,17 +12,22 @@ let catalogo = [
     {imagen: 'https://picsum.photos/id/250/300/200', nombre: 'Producto 10', codigo: 10, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 25000, cantidad: 1}
 ]
 
+
 // Variables y eventos
 const cards = document.querySelector('.cards') 
 const tabla = document.querySelector('#tabla') 
 const contenidoTabla = document.querySelector('#contenido-tabla') 
 const vaciarCarrito = document.querySelector('#vaciar-carrito')
+const pagarCarrito = document.querySelector('#pagar-carrito')
 const totalNeto = document.querySelector('#totalNeto')
 const totalIva = document.querySelector('#totalIva')
-const totalCompra = document.querySelector('#totalCompra')
+const netoIva = document.querySelector('#netoIva')
 const precioEnvio = document.querySelector('#precioEnvio')
 const totalTotal = document.querySelector('#totalTotal')
+const contenedorTotales = document.querySelector('#contenedor-totales')
+const botones = document.querySelector('.botones')
 let carrito = []
+let totales = []
 
 window.addEventListener('DOMContentLoaded', mostrarProductos)
 
@@ -113,9 +118,10 @@ function eliminarInfoPrevia() {
  */
 function borrarCarrito() {
     carrito = []
+    totales = []
     totalNeto.textContent = '$0'
     totalIva.textContent = '$0'
-    totalCompra.textContent = '$0'
+    netoIva.textContent = '$0'
     precioEnvio.textContent = '$0'
     totalTotal.textContent = '$0' 
     
@@ -156,7 +162,7 @@ function calcularTotales() {
 
     totalNeto.textContent = '$' + (totalCarrito - (totalCarrito * 0.19))
     totalIva.textContent = '$' + (totalCarrito * 0.19)
-    totalCompra.textContent = `$ ${totalCarrito}`
+    netoIva.textContent = `$ ${totalCarrito}`
     
     if(totalCarrito < 100000) {
         const montoEnvio = totalCarrito * 0.05
@@ -166,4 +172,36 @@ function calcularTotales() {
         precioEnvio.textContent = '$0'
         totalTotal.textContent = `$ ${totalCarrito}`
     }
+
+    const valoresTotales = {
+        neto: totalNeto.textContent,
+        iva: totalIva.textContent,
+        netoIva: netoIva.textContent,
+        precioEnvio: precioEnvio.textContent,
+        totalTotal: totalTotal.textContent
+    }
+    totales = [valoresTotales]
+}
+
+/**
+ * Al presionar el botón pagar si existe algo en el carrito manda todos los datos de este al ls y redirije a otro html con un formulario y los datos del ls
+ */
+function pagoCarrito() {
+    if(carrito.length !== 0) {
+        localStorage.setItem('carrito', JSON.stringify(carrito))
+        localStorage.setItem('totales', JSON.stringify(totales))
+        window.location.href = 'pago.html'
+    } else {
+        crearAlerta()
+    }
+}
+
+function crearAlerta() {
+    const mensaje = document.createElement('div')
+    mensaje.classList.add('bg-warning', 'p-3', 'w-100', 'fw-bold', 'text-center', 'border', 'border-dark', 'rounded', 'mb-2')
+    mensaje.textContent = 'Agregue al menos un producto para realizar el pago'
+    contenedorTotales.insertBefore(mensaje, botones)
+    setTimeout(() => {
+        mensaje.remove()
+    }, 3000)
 }
