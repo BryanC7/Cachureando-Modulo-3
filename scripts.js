@@ -20,6 +20,8 @@ const vaciarCarrito = document.querySelector('#vaciar-carrito')
 const totalNeto = document.querySelector('#totalNeto')
 const totalIva = document.querySelector('#totalIva')
 const totalCompra = document.querySelector('#totalCompra')
+const precioEnvio = document.querySelector('#precioEnvio')
+const totalTotal = document.querySelector('#totalTotal')
 let carrito = []
 
 window.addEventListener('DOMContentLoaded', mostrarProductos)
@@ -67,7 +69,7 @@ function crearObj(id){
                 return producto
             }
         })
-        carrito = [...productos]
+        carrito = productos
     } else {
         carrito = [...carrito, productoCarrito]
     }
@@ -114,6 +116,8 @@ function borrarCarrito() {
     totalNeto.textContent = '$0'
     totalIva.textContent = '$0'
     totalCompra.textContent = '$0'
+    precioEnvio.textContent = '$0'
+    totalTotal.textContent = '$0' 
     
     mostrarCarrito()
 }
@@ -144,20 +148,22 @@ function eliminarProducto(id) {
 }
 
 /** 
- * Calcula los precios totales según contenido del carrito (total neto, el IVA incluido y el total + IVA)
+ * Calcula los precios totales según contenido del carrito (total neto, el IVA incluido, el total + IVA, precio de envio y el total a pagar)
 */
 function calcularTotales() {
     const preciosCarrito = carrito.map(producto => producto.precio)
     let totalCarrito = preciosCarrito.reduce((total, actual) => total + actual)
-    console.log(totalCarrito)
 
-    totalNeto.textContent = `$ ${totalCarrito}`
-    totalIva.textContent = `$ ${totalCarrito} + (${totalCarrito} * 0.19)`
-    totalCompra.textContent = '$' + (totalCarrito + (totalCarrito * 0.19))
+    totalNeto.textContent = '$' + (totalCarrito - (totalCarrito * 0.19))
+    totalIva.textContent = '$' + (totalCarrito * 0.19)
+    totalCompra.textContent = `$ ${totalCarrito}`
     
-    const valorTotal = parseFloat(totalCompra.textContent.slice(1, 10))
-    console.log(valorTotal)
-    if(valorTotal < 500) {
-        return totalCarrito + (totalCarrito * 0.05)
-    } 
+    if(totalCarrito < 500) {
+        const montoEnvio = totalCarrito * 0.05
+        precioEnvio.textContent = '$' + montoEnvio
+        totalTotal.textContent = '$' + (montoEnvio + totalCarrito)
+    } else {
+        precioEnvio.textContent = '$0'
+        totalTotal.textContent = `$ ${totalCarrito}`
+    }
 }
