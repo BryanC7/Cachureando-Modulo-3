@@ -30,6 +30,7 @@ let carrito = []
 let totales = []
 
 window.addEventListener('DOMContentLoaded', mostrarProductos)
+window.addEventListener('DOMContentLoaded', consultarData)
 
 /**
  * Muestra en el DOM todos los productos del arreglo
@@ -114,7 +115,7 @@ function eliminarInfoPrevia() {
 }
 
 /**
- * Elimina todo el contenido del carrito + los valores totales al momento de presionar el botón de vaciar
+ * Elimina contenidos del carrito, los valores totales y localstorage al momento de presionar el botón de vaciar
  */
 function borrarCarrito() {
     carrito = []
@@ -123,7 +124,9 @@ function borrarCarrito() {
     totalIva.textContent = '$0'
     netoIva.textContent = '$0'
     precioEnvio.textContent = '$0'
-    totalTotal.textContent = '$0' 
+    totalTotal.textContent = '$0'
+    localStorage.removeItem('carrito')
+    localStorage.removeItem('totales')
     
     mostrarCarrito()
 }
@@ -196,6 +199,9 @@ function pagoCarrito() {
     }
 }
 
+/**
+ * Si al presionar el botón de pagar no hay ningún elemento en el carrito que imprima la alerta en el DOM
+ */
 function crearAlerta() {
     const mensaje = document.createElement('div')
     mensaje.classList.add('bg-warning', 'p-3', 'w-100', 'fw-bold', 'text-center', 'border', 'border-dark', 'rounded', 'mb-2')
@@ -204,4 +210,14 @@ function crearAlerta() {
     setTimeout(() => {
         mensaje.remove()
     }, 3000)
+}
+
+/**
+ * Si existe información en el local storage mostrarla en el carrito
+ */
+function consultarData() {
+    const data = JSON.parse(localStorage.getItem('carrito'))
+    carrito = [...data]
+    mostrarCarrito()
+    calcularTotales()
 }

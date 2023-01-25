@@ -1,3 +1,6 @@
+p {
+    margin: 10px 0;
+}
 .container{
     display: flex;
     flex-direction: column;
@@ -22,7 +25,7 @@
     margin: 2px 0 2px 0;
     border-radius: 6px;
     background-color: white;
-   
+    padding: 10px;
 }
 .contenedor-productos div{
     display: flex;
@@ -46,6 +49,7 @@
 .contenedor-check{
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 .contenedor-check .form-check {
     margin: 20px;
