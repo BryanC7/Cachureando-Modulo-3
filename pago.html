@@ -23,6 +23,7 @@
     <div class="fondo"></div>
     
     <main class="container">
+
         <h4>Carrito</h4>
         <div class="contenedor" id="contenedor-productos"></div>
         <div class="contenedor" id="contenedor-precio"></div>
@@ -43,12 +44,32 @@
             </div>
         </div>
 
+        <h4>Datos de despacho</h4>
+        <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Dirección</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Comuna</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Región</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Nombre de quién recibe</label>
+              <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+        </form>
+
         <h4>Envio de Comprobante</h4>
-        
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Ingrese su correo" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="botonEnviar">Enviar</button>
+        <div>
+            <input type="text" class="form-control mb-3" placeholder="Ingrese su correo electrónico" aria-describedby="button-addon2">
+            <button type="submit" class="btn btn-outline-secondary">Enviar</button>
         </div>
+
     </main>
 
     <footer class="footer">
