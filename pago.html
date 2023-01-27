@@ -17,7 +17,7 @@
         <script type="text/javascript">
         (function() {
             // https://dashboard.emailjs.com/admin/account
-            emailjs.init('2z2hMRdqXBTRQLNLw');
+            emailjs.init('pb6kz97fw3xs0gDgA');
         })();
     </script>
         <script type="text/javascript">
@@ -31,7 +31,7 @@
             var newelement = '';
             carrito.forEach(producto => {
         console.log(producto)
-        newelement= newelement+producto.nombre+''+producto.cantidad+''+producto.precio+'\n';
+        newelement= newelement + '' + producto.nombre + '' + producto.cantidad + producto.precio + '\n';
         })
 
             var templateParams= {
@@ -43,7 +43,7 @@
 
         }
         ;
-                emailjs.send("pago_carrito","template_0ypcysm",templateParams)
+                emailjs.send("pago_carrito","template_w82u42h",templateParams)
                     .then(res =>  {
                         console.log(res);
                     })
@@ -138,3 +138,5 @@
         crossorigin="anonymous"></script>
     <script src="/js/pago.js"></script>
 </html>
+
+<!-- carrito.pago2@gmail.com PagoCarrito1234 -->
