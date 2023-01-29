@@ -28,10 +28,10 @@
             var mensajecliente1= document.getElementById('mensajeenviar').value;
             var totalcompra= document.getElementsByClassName('fw-bold').value;
             var espacio= ' ';
-            var newelement = '';
+            var newelement = ' ';
             carrito.forEach(producto => {
         console.log(producto)
-        newelement= newelement + espacio + producto.nombre + espacio + producto.cantidad + espacio +producto.precio + '\n';
+        newelement= newelement + espacio + producto.nombre + espacio + producto.cantidad + espacio + '$' + producto.precio + '\n';
         })
 
             var templateParams= {
