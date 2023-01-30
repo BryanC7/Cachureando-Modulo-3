@@ -12,7 +12,6 @@ let catalogo = [
     {imagen: 'https://picsum.photos/id/250/300/200', nombre: 'Producto 10', codigo: 10, descripcion: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.', precio: 25000, cantidad: 1}
 ]
 
-
 // Variables y eventos
 const cards = document.querySelector('.cards') 
 const tabla = document.querySelector('#tabla') 
