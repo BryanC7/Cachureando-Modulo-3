@@ -31,7 +31,7 @@
             var newelement = ' ';
             carrito.forEach(producto => {
         console.log(producto)
-        newelement= newelement + espacio + producto.nombre + espacio + producto.cantidad + espacio + '$' + producto.precio + '\n';
+        newelement= newelement + espacio + producto.nombre + espacio + '//' + espacio + 'Cantidad: ' + espacio + producto.cantidad + '//' + espacio + '$' + producto.precio + '\n';
         })
 
             var templateParams= {
