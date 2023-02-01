@@ -9,20 +9,36 @@ function enviar() {
     const nombre1= document.getElementById('nombrecliente').value;
     const correo1= document.getElementById('correocliente').value;
     const mensajecliente1= document.getElementById('mensajeenviar').value;
+    const region = document.getElementById('regioncliente').value;
+    const comuna = document.getElementById('comunacliente').value;
+    var pago = document.getElementsByClassName('form-check-input');
     const espacio= ' ';
     let newelement = ' ';
+
 
     carrito.forEach(producto => {
         newelement= newelement + espacio + producto.nombre + espacio + '//' + espacio + 'Cantidad: ' + espacio + producto.cantidad + '//' + espacio + '$' + producto.precio + '\n';
     })
 
+    if (pago[0].checked == true){
+        var metodo_pago = "Tarjeta Débito/Crédito"
+    }else if (pago[1].checked == true){
+        var metodo_pago = "Transferencia Bancaria"
+    }else if (pago[2].checked == true){
+        var metodo_pago = "Cheque"
+    }
+    
     let templateParams= {
         nombre: nombre1,
         correo: correo1,
         mensajecliente: mensajecliente1,
         carritoenviar: newelement,
+        regionboleta: region,
+        comunaboleta: comuna,
+        pagoboleta: metodo_pago,
         total: totales[0].totalTotal
     }
+
 
     emailjs.send("pago_carrito","template_w82u42h",templateParams)
         .then(res =>  {
